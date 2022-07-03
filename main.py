@@ -95,8 +95,7 @@ def main(
     financial_info = dropCreditCardNumber(financial_info)  # type:ignore
 
     result = innerJoin(client_info, financial_info, ['id'])
-    result = renameColumns(result)
-    return result
+    return renameColumns(result)
 
 
 if __name__ == '__main__':
