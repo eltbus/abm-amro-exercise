@@ -1,0 +1,46 @@
+[tool.poetry]
+name = "abm-amro-exercise"
+version = "0.1.0"
+description = ""
+authors = ["eltbus <naselliug@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+pandas = "^1.4.3"
+
+[tool.poetry.group.dev.dependencies]
+isort = "^5.10.1"
+black = "^22.3.0"
+flake8 = "^4.0.1"
+pydocstyle = "^6.1.1"
+mypy = "^0.950"
+
+[tool.poetry.group.test.dependencies]
+pytest = "^7.1.2"
+pytest-mock = "^3.8.1"
+pytest-cov = "^3.0.0"
+pytest-html = "^3.1.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.isort]
+profile = "black"
+float_to_top = true
+include_trailing_comma = true
+line_length = 120
+multi_line_output = 3
+use_parentheses = true
+skip_gitignore = true
+
+[tool.mypy]
+ignore_missing_imports = true
+
+[tool.pyright]
+reportMissingImports = false
+reportMissingTypeStubs = false
+reportUnboundVariable = false
+reportMissingModuleSource = false
+reportUnusedFunction = true
