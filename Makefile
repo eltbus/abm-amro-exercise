@@ -11,3 +11,6 @@ requirements:
 
 test:
 	@poetry run python -Bm coverage run -m pytest -rs --html=docs/pytest-report/report.html --self-contained-html tests
+
+show-coverage-report:
+	@poetry run python -Bm coverage report --omit 'tests/conftest.py'
