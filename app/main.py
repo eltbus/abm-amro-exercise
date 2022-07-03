@@ -1,5 +1,6 @@
 from argparse import ArgumentParser
 from typing import List, Dict
+import sys
 
 from pandas import DataFrame, read_csv
 
@@ -125,3 +126,5 @@ if __name__ == '__main__':
         path_to_financial_info_file=args.path_to_financial_info_file,
         countries_to_filter=args.countries_to_filter
     )
+
+    result.to_csv(sys.stdout, index=False)  # type:ignore
