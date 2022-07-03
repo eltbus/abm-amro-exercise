@@ -4,6 +4,45 @@ from typing import List, Dict
 from pandas import DataFrame, read_csv
 
 
+def loadPersonalInfo(filepath: str) -> DataFrame:
+    """
+    Loads CSV as pandas.DataFrame.
+
+    Bad filepath ->
+    Bad file schema (missing columns) ->
+    """
+    return read_csv(
+        filepath,
+        sep=',',  # type:ignore
+        usecols=['id', 'email', 'country'],
+        dtype={
+            'id': int,
+            'email': str,
+            'country': str,
+        }
+    )
+
+
+def loadFinancialInfo(filepath: str) -> DataFrame:
+    """
+    Loads CSV as pandas.DataFrame.
+
+    Bad filepath ->
+    Bad file schema (missing columns) ->
+    """
+    return read_csv(
+        filepath,
+        sep=',',  # type:ignore
+        usecols=['id', 'btc_a', 'cc_t', 'cc_n'],
+        dtype={
+            'id': int,
+            'btc_a': str,
+            'cc_t': str,
+            'cc_n': str,
+        }
+    )
+
+
 def filterRowsByCountry(df: DataFrame, countries: List[str]) -> DataFrame:
     """
     Filter DataFrame rows by country.
@@ -47,20 +86,12 @@ def main(
     """
     Load datasets, filter them, select their columns, merge them, and rename the final columns.
     """
-    client_info = read_csv(
-        path_to_personal_info_file,
-        sep=',',  # type:ignore
-        usecols=['id', 'email', 'country']
-    )
+    client_info = loadPersonalInfo(filepath=path_to_personal_info_file)
     if countries_to_filter:
         client_info = filterRowsByCountry(client_info, countries_to_filter)  # type:ignore
     client_info = selectIdAndEmail(client_info)  # type:ignore
 
-    financial_info = read_csv(
-        path_to_financial_info_file,
-        sep=',',  # type:ignore
-        usecols=['id', 'btc_a', 'cc_t', 'cc_n']
-    )
+    financial_info = loadFinancialInfo(filepath=path_to_financial_info_file)
     financial_info = dropCreditCardNumber(financial_info)  # type:ignore
 
     result = innerJoin(client_info, financial_info, ['id'])
