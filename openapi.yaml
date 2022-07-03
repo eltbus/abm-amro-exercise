@@ -1,0 +1,6 @@
+info:
+  description: Exercise implemented as a REST API
+  title: ABM AMRO Exercise REST API
+  version: DEVELOP
+openapi: 3.0.2
+paths: {}

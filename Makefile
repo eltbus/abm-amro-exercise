@@ -14,3 +14,6 @@ test:
 
 show-coverage-report:
 	@poetry run python -Bm coverage report --omit 'tests/conftest.py'
+
+serve:
+	@poetry run python -Bm uvicorn app.__main__:api --port 8000 --reload
