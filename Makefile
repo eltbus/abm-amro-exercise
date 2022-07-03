@@ -10,10 +10,10 @@ requirements:
 	@poetry export -f requirements.txt --only main,docs --without-hashes --output requirements-docs.txt
 
 test:
-	@poetry run python -Bm coverage run -m pytest -rs --html=docs/pytest-report/report.html --self-contained-html tests
+	@PYTHONPATH=app poetry run python -Bm coverage run -m pytest -rs --html=docs/pytest-report/report.html --self-contained-html tests
 
 show-coverage-report:
-	@poetry run python -Bm coverage report --omit 'tests/conftest.py'
+	@PYTHONPATH=app poetry run python -Bm coverage report --omit 'tests/conftest.py'
 
 serve:
 	@poetry run python -Bm uvicorn app.__main__:api --port 8000 --reload

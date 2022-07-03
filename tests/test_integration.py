@@ -1,11 +1,11 @@
 from pandas import DataFrame
 
-from main import main
+from app.main import main
 
 
 def test_main_returns_expected_result_for_sample_with_country_AAA(personal_info, financial_info, mocker):
-    mocker.patch('main.loadPersonalInfo', return_value=personal_info)
-    mocker.patch('main.loadFinancialInfo', return_value=financial_info)
+    mocker.patch('app.main.loadPersonalInfo', return_value=personal_info)
+    mocker.patch('app.main.loadFinancialInfo', return_value=financial_info)
 
     sample_data = {
         'client_identifier': [0],
