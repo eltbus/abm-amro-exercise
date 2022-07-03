@@ -1,6 +1,7 @@
+from argparse import ArgumentParser
 from typing import List, Dict
 
-from pandas import DataFrame
+from pandas import DataFrame, read_csv
 
 
 def filterRowsByCountry(df: DataFrame, countries: List[str]) -> DataFrame:
@@ -36,3 +37,61 @@ def renameColumns(df: DataFrame):
         'cc_t': 'credit_card_type',
     }
     return df.rename(columns=mapper)  # type:ignore
+
+
+def main(
+    path_to_personal_info_file: str,
+    path_to_financial_info_file: str,
+    countries_to_filter: List[str],
+):
+    """
+    Load datasets, filter them, select their columns, merge them, and rename the final columns.
+    """
+    client_info = read_csv(
+        path_to_personal_info_file,
+        sep=',',  # type:ignore
+        usecols=['id', 'email', 'country']
+    )
+    if countries_to_filter:
+        client_info = filterRowsByCountry(client_info, countries_to_filter)  # type:ignore
+    client_info = selectIdAndEmail(client_info)  # type:ignore
+
+    financial_info = read_csv(
+        path_to_financial_info_file,
+        sep=',',  # type:ignore
+        usecols=['id', 'btc_a', 'cc_t', 'cc_n']
+    )
+    financial_info = dropCreditCardNumber(financial_info)  # type:ignore
+
+    result = innerJoin(client_info, financial_info, ['id'])
+    result = renameColumns(result)
+    return result
+
+
+if __name__ == '__main__':
+    parser = ArgumentParser(description="Join personal and financial datasets with an optional country filter.")
+    parser.add_argument(
+        '--path-to-personal-info-file',
+        dest='path_to_personal_info_file',
+        required=True,
+        help="CSV file with the following fields: 'id', 'email', 'country'.",
+    )
+    parser.add_argument(
+        '--path-to-financial-info-file',
+        dest='path_to_financial_info_file',
+        required=True,
+        help="CSV file with the following fields: 'id', 'btc_a', 'cc_t', 'cc_n'.",
+    )
+    parser.add_argument(
+        '--countries-to-filter',
+        dest='countries_to_filter',
+        nargs='+',
+        default=[],
+        help="Optional list of countries to filter clients.",
+    )
+    args = parser.parse_args()
+    result = main(
+        path_to_personal_info_file=args.path_to_personal_info_file,
+        path_to_financial_info_file=args.path_to_financial_info_file,
+        countries_to_filter=args.countries_to_filter
+    )
