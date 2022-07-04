@@ -4,6 +4,11 @@ import sys
 
 from pandas import DataFrame, read_csv
 
+try:
+    from app.logger import logger
+except ModuleNotFoundError:
+    from logger import logger  # type:ignore
+
 
 def loadPersonalInfo(filepath: str) -> DataFrame:
     """
@@ -88,15 +93,23 @@ def main(
     Load datasets, filter them, select their columns, merge them, and rename the final columns.
     """
     client_info = loadPersonalInfo(filepath=path_to_personal_info_file)
+    logger.info('Loaded personal info.')
     if countries_to_filter:
         client_info = filterRowsByCountry(client_info, countries_to_filter)  # type:ignore
+        logger.info('Filtered personal info by country.')
     client_info = selectIdAndEmail(client_info)  # type:ignore
+    logger.info('Selected "id" and "email columns.')
 
     financial_info = loadFinancialInfo(filepath=path_to_financial_info_file)
+    logger.info('Loaded financial info.')
     financial_info = dropCreditCardNumber(financial_info)  # type:ignore
+    logger.info('Drop credit cardnumber from financial info.')
 
     result = innerJoin(client_info, financial_info, ['id'])
-    return renameColumns(result)
+    logger.info('Drop credit cardnumber from financial info.')
+    result = renameColumns(result)
+    logger.info('Renamed columns.')
+    return result
 
 
 if __name__ == '__main__':
@@ -126,5 +139,5 @@ if __name__ == '__main__':
         path_to_financial_info_file=args.path_to_financial_info_file,
         countries_to_filter=args.countries_to_filter
     )
-
     result.to_csv(sys.stdout, index=False)  # type:ignore
+    logger.info('Successfully printed output to STDOUT')
