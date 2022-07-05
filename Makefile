@@ -10,7 +10,7 @@ requirements:
 	@poetry export -f requirements.txt --only main,docs --without-hashes --output requirements-docs.txt
 
 test:
-	@PYTHONPATH=app poetry run python -Bm coverage run -m pytest -rs --html=docs/pytest-report/report.html --self-contained-html tests
+	@PYTHONPATH=app poetry run python -Bm coverage run -m pytest -rs tests
 
 show-coverage-report:
 	@PYTHONPATH=app poetry run python -Bm coverage report --omit 'tests/conftest.py'
