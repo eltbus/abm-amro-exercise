@@ -23,7 +23,7 @@ def test_loadPersonalInfo_raises_ValueError_if_missing_filepath():
 
 def test_loadFinancialInfo_raises_ValueError_if_missing_required_columns():
     with pytest.raises(ValueError):
-        loadFinancialInfo('data/client_info.csv')
+        loadFinancialInfo('data/personal_info.csv')
 
 
 def test_loadFinancialInfo_raises_ValueError_if_missing_filepath():
