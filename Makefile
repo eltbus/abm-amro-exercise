@@ -4,10 +4,7 @@ install:
 	@command -v poetry &>/dev/null || echo "ERROR: Poetry not installed" && poetry install
 
 requirements:
-	@poetry export -f requirements.txt --only main --output requirements.txt
-	@poetry export -f requirements.txt --only dev --without-hashes --output requirements-dev.txt
-	@poetry export -f requirements.txt --only main,test --without-hashes --output requirements-test.txt
-	@poetry export -f requirements.txt --only main,docs --without-hashes --output requirements-docs.txt
+	@poetry export -f requirements.txt --only main,test --output requirements.txt
 
 test:
 	@PYTHONPATH=app poetry run python -Bm coverage run -m pytest -rs tests
