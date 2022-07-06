@@ -35,7 +35,7 @@ async def getResult(
             result = pipeline(
                 personal_info.file,  # type:ignore
                 financial_info.file,  # type:ignore
-                countries_to_filter=countries_to_filter
+                countries_to_filter=countries_to_filter,
             )
             stream = BytesIO()
             result.to_csv(stream, index=False)  # type:ignore
@@ -48,6 +48,6 @@ async def getResult(
         finally:
             await personal_info.close()
             await financial_info.close()
-    response = StreamingResponse(iter([stream.getvalue()]), media_type='text/csv')
-    response.headers['Content-Disposition'] = 'attachment; filename=export.csv'
+    response = StreamingResponse(iter([stream.getvalue()]), media_type="text/csv")
+    response.headers["Content-Disposition"] = "attachment; filename=export.csv"
     return response

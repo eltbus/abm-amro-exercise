@@ -9,5 +9,6 @@ def create_api() -> FastAPI:
         version=os.environ.get("VERSION") or "DEVELOP",
     )
     from app.router import router
+
     api.include_router(router)
     return api
