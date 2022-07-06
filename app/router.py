@@ -8,7 +8,7 @@ from fastapi import APIRouter, UploadFile, Query
 from fastapi.responses import JSONResponse, StreamingResponse
 from starlette.status import HTTP_400_BAD_REQUEST
 
-from app.main import main
+from app.core import pipeline
 
 logger = logging.getLogger(__name__)
 router = APIRouter()
@@ -32,7 +32,7 @@ async def getResult(
         return JSONResponse(content, status_code=HTTP_400_BAD_REQUEST)
     else:
         try:
-            result = main(
+            result = pipeline(
                 personal_info.file,  # type:ignore
                 financial_info.file,  # type:ignore
                 countries_to_filter=countries_to_filter

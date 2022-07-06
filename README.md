@@ -16,15 +16,27 @@ To run it locally you must install the requirements .
 
 ### System install
 - Install the requirements locally with: `pip install -r requirements.txt`.
-- Run util with `python -B app/main.py` (see options with flag `-h`).
-- Spin up the API (locally) with `python -Bm uvicorn app.__main__:api --port 8000`.
+- Run util with `python -B app/core.py` (see options with flag `-h`), OR spin up the API (locally) with `python -Bm uvicorn app.__main__:api --port 8000`.
+Example on how to use the CLI program:
+```
+python -B app/core.py \
+    --path-to-personal-info-file data/personal_info.csv
+    --path-to-financial-info-file data/financial_info.csv
+    --countries Netherlands 'United Kingdom'
+```
 
 ### Virtual Environment install (with Poetry)
 Used to develop the util. Requires Poetry 1.2 (installation from GitHub branch).
 
 - Install the requirements locally with: `poetry install`.
-- Run util with `poetry run python -B app/main.py` (see options with flag `-h`).
-- Spin up the API (locally) with `poetry run python -Bm uvicorn app.__main__:api --port 8000`.
+- Run util with `python -B app/core.py` (see options with flag `-h`), OR spin up the API (locally) with `python -Bm uvicorn app.__main__:api --port 8000`.
+Example on how to use the CLI program:
+```
+poetry run python -B app/core.py \
+    --path-to-personal-info-file data/personal_info.csv
+    --path-to-financial-info-file data/financial_info.csv
+    --countries Netherlands 'United Kingdom'
+```
 
 ## Docker
 - Build the image: `docker build --network=host . -t abm-amro-exercise`.

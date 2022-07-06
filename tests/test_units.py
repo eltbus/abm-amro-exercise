@@ -1,6 +1,6 @@
 import pytest
 
-from app.main import (
+from app.core import (
     load_personal_info,
     load_financial_info,
     filter_rows_by_country,

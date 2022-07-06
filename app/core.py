@@ -4,6 +4,7 @@ import sys
 
 from pandas import DataFrame, read_csv
 
+# CLI program call does not find app, since it's the parent folder. Easy patch is to import from directly from logger.py
 try:
     from app.logger import logger
 except ModuleNotFoundError:
@@ -84,7 +85,7 @@ def rename_columns(df: DataFrame):
     return df.rename(columns=mapper)  # type:ignore
 
 
-def main(
+def pipeline(
     path_to_personal_info_file: str,
     path_to_financial_info_file: str,
     countries_to_filter: List[str],
@@ -134,7 +135,7 @@ if __name__ == '__main__':
         help="Optional list of countries to filter clients.",
     )
     args = parser.parse_args()
-    result = main(
+    result = pipeline(
         path_to_personal_info_file=args.path_to_personal_info_file,
         path_to_financial_info_file=args.path_to_financial_info_file,
         countries_to_filter=args.countries_to_filter

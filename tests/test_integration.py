@@ -1,11 +1,11 @@
 from pandas import DataFrame
 
-from app.main import main
+from app.core import pipeline
 
 
-def test_main_returns_expected_result_for_sample_with_country_AAA(personal_info, financial_info, mocker):
-    mocker.patch('app.main.load_personal_info', return_value=personal_info)
-    mocker.patch('app.main.load_financial_info', return_value=financial_info)
+def test_pipeline_returns_expected_result_for_sample_with_country_AAA(personal_info, financial_info, mocker):
+    mocker.patch('app.core.load_personal_info', return_value=personal_info)
+    mocker.patch('app.core.load_financial_info', return_value=financial_info)
 
     sample_data = {
         'client_identifier': [0],
@@ -15,7 +15,7 @@ def test_main_returns_expected_result_for_sample_with_country_AAA(personal_info,
     }
 
     expected = DataFrame(data=sample_data)
-    result = main('...', '...', countries_to_filter=['AAA'])
+    result = pipeline('...', '...', countries_to_filter=['AAA'])
     assert expected.equals(result)
 
 
