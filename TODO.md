@@ -1,4 +1,4 @@
-# Programming Exercise using PySpark
+# Programming Exercise using **Pandas**
 
 ## Background:
 A very small company called **KommatiPara** that deals with bitcoin trading has two separate datasets dealing with clients that they want to collate to starting interfacing more with their clients. One dataset contains information about the clients and the other one contains information about their financial details.
