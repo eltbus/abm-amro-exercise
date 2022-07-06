@@ -10,7 +10,7 @@ except ModuleNotFoundError:
     from logger import logger  # type:ignore
 
 
-def loadPersonalInfo(filepath: str) -> DataFrame:
+def load_personal_info(filepath: str) -> DataFrame:
     """
     Loads CSV as pandas.DataFrame.
 
@@ -29,7 +29,7 @@ def loadPersonalInfo(filepath: str) -> DataFrame:
     )
 
 
-def loadFinancialInfo(filepath: str) -> DataFrame:
+def load_financial_info(filepath: str) -> DataFrame:
     """
     Loads CSV as pandas.DataFrame.
 
@@ -49,33 +49,33 @@ def loadFinancialInfo(filepath: str) -> DataFrame:
     )
 
 
-def filterRowsByCountry(df: DataFrame, countries: List[str]) -> DataFrame:
+def filter_rows_by_country(df: DataFrame, countries: List[str]) -> DataFrame:
     """
     Filter DataFrame rows by country.
     """
     return df[df['country'].isin(countries)]
 
 
-def selectIdAndEmail(df: DataFrame) -> DataFrame:
+def select_id_and_email(df: DataFrame) -> DataFrame:
     """
     Remove personal identifiable information from the first dataset, excluding emails and id.
     """
     return df[['id', 'email']]
 
 
-def dropCreditCardNumber(df: DataFrame) -> DataFrame:
+def drop_credit_cardnumber(df: DataFrame) -> DataFrame:
     """
     Remove column with credit card number.
     """
     return df.drop('cc_n', axis=1)  # type:ignore
 
 
-def innerJoin(df1: DataFrame, df2: DataFrame, key: List[str]):
+def inner_join(df1: DataFrame, df2: DataFrame, key: List[str]):
     """Inner join datasets on key(s)"""
     return df1.merge(df2, how='inner', on=key)
 
 
-def renameColumns(df: DataFrame):
+def rename_columns(df: DataFrame):
     mapper: Dict[str, str] = {
         'id': 'client_identifier',
         'btc_a': 'bitcoin_address',
@@ -92,22 +92,22 @@ def main(
     """
     Load datasets, filter them, select their columns, merge them, and rename the final columns.
     """
-    client_info = loadPersonalInfo(filepath=path_to_personal_info_file)
+    client_info = load_personal_info(filepath=path_to_personal_info_file)
     logger.info('Loaded personal info.')
     if countries_to_filter:
-        client_info = filterRowsByCountry(client_info, countries_to_filter)  # type:ignore
+        client_info = filter_rows_by_country(client_info, countries_to_filter)  # type:ignore
         logger.info('Filtered personal info by country.')
-    client_info = selectIdAndEmail(client_info)  # type:ignore
+    client_info = select_id_and_email(client_info)  # type:ignore
     logger.info('Selected "id" and "email columns.')
 
-    financial_info = loadFinancialInfo(filepath=path_to_financial_info_file)
+    financial_info = load_financial_info(filepath=path_to_financial_info_file)
     logger.info('Loaded financial info.')
-    financial_info = dropCreditCardNumber(financial_info)  # type:ignore
+    financial_info = drop_credit_cardnumber(financial_info)  # type:ignore
     logger.info('Drop credit cardnumber from financial info.')
 
-    result = innerJoin(client_info, financial_info, ['id'])
+    result = inner_join(client_info, financial_info, ['id'])
     logger.info('Drop credit cardnumber from financial info.')
-    result = renameColumns(result)
+    result = rename_columns(result)
     logger.info('Renamed columns.')
     return result
 
