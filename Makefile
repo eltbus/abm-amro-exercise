@@ -15,5 +15,8 @@ show-coverage-report:
 serve:
 	@poetry run python -Bm uvicorn app.__main__:api --port 8000 --reload
 
+openapi:
+	@poetry run python -Bm app
+
 run:
 	@poetry run python -B app/main.py --path-to-personal-info-file data/personal_info.csv --path-to-financial-info-file data/financial_info.csv --countries-to-filter Netherlands 'United Kingdom' > client_data/result.csv
