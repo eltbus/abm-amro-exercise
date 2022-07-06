@@ -76,7 +76,7 @@ def inner_join(df1: DataFrame, df2: DataFrame, key: List[str]):
     return df1.merge(df2, how='inner', on=key)
 
 
-def rename_columns(df: DataFrame):
+def rename_columns(df: DataFrame) -> DataFrame:
     mapper: Dict[str, str] = {
         'id': 'client_identifier',
         'btc_a': 'bitcoin_address',
@@ -89,7 +89,7 @@ def pipeline(
     path_to_personal_info_file: str,
     path_to_financial_info_file: str,
     countries_to_filter: List[str],
-):
+) -> DataFrame:
     """
     Load datasets, filter them, select their columns, merge them, and rename the final columns.
     """
