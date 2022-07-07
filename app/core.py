@@ -1,6 +1,7 @@
 from argparse import ArgumentParser
 from typing import List, Dict
 import sys
+from os import PathLike
 
 from pandas import DataFrame, read_csv
 
@@ -11,7 +12,7 @@ except ModuleNotFoundError:
     from logger import logger  # type:ignore
 
 
-def load_personal_info(filepath: str) -> DataFrame:
+def load_personal_info(filepath: str | PathLike) -> DataFrame:
     """
     Loads CSV as pandas.DataFrame.
 
@@ -30,7 +31,7 @@ def load_personal_info(filepath: str) -> DataFrame:
     )
 
 
-def load_financial_info(filepath: str) -> DataFrame:
+def load_financial_info(filepath: str | PathLike) -> DataFrame:
     """
     Loads CSV as pandas.DataFrame.
 
@@ -86,8 +87,8 @@ def rename_columns(df: DataFrame) -> DataFrame:
 
 
 def pipeline(
-    path_to_personal_info_file: str,
-    path_to_financial_info_file: str,
+    path_to_personal_info_file: str | PathLike,
+    path_to_financial_info_file: str | PathLike,
     countries_to_filter: List[str],
 ) -> DataFrame:
     """
