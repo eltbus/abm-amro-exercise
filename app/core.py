@@ -94,7 +94,10 @@ def pipeline(
     """
     Load datasets, filter them, select their columns, merge them, and rename the final columns.
     """
-    client_info = load_personal_info(filepath=path_to_personal_info_file)
+    try:
+        client_info = load_personal_info(filepath=path_to_personal_info_file)
+    except ValueError:
+        raise ValueError('Missing required columns. Required columns: ["id", "email", "country"]')
     logger.info("Loaded personal info.")
     if countries_to_filter:
         client_info = filter_rows_by_country(
@@ -104,7 +107,10 @@ def pipeline(
     client_info = select_id_and_email(client_info)  # type:ignore
     logger.info('Selected "id" and "email columns.')
 
-    financial_info = load_financial_info(filepath=path_to_financial_info_file)
+    try:
+        financial_info = load_financial_info(filepath=path_to_financial_info_file)
+    except ValueError:
+        raise ValueError('Missing required columns. Required columns: ["id", "btc_a", "cc_t", "cc_n"]')
     logger.info("Loaded financial info.")
     financial_info = drop_credit_cardnumber(financial_info)  # type:ignore
     logger.info("Drop credit cardnumber from financial info.")
