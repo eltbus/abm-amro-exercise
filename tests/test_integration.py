@@ -4,20 +4,17 @@ from app.core import pipeline
 
 
 def test_pipeline_returns_expected_result_for_sample_with_country_AAA(
-    personal_info, financial_info, mocker
+    personal_info_file, financial_info_file
 ):
-    mocker.patch("app.core.load_personal_info", return_value=personal_info)
-    mocker.patch("app.core.load_financial_info", return_value=financial_info)
-
     sample_data = {
         "client_identifier": [0],
         "email": ["aaa@foo.com"],
-        "bitcoin_address": ["001xfoos"],
+        "bitcoin_address": ["foos"],
         "credit_card_type": ["visa"],
     }
 
     expected = DataFrame(data=sample_data)
-    result = pipeline("...", "...", countries_to_filter=["AAA"])
+    result = pipeline(personal_info_file, financial_info_file, countries_to_filter=["AAA"])
     assert expected.equals(result)
 
 

@@ -11,6 +11,14 @@ from app.core import (
 )
 
 
+def test_load_personal_parsers_file_into_expected_dataframe(personal_info_file, personal_info):
+    assert load_personal_info(personal_info_file).equals(personal_info)
+
+
+def test_load_financial_parsers_file_into_expected_dataframe(financial_info_file, financial_info):
+    assert load_financial_info(financial_info_file).equals(financial_info)
+
+
 def test_load_personal_info_raises_ValueError_if_missing_required_columns():
     with pytest.raises(ValueError):
         load_personal_info("data/financial_info.csv")
