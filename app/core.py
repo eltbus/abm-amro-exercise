@@ -92,20 +92,26 @@ def pipeline(
     try:
         client_info = load_personal_info(filepath=path_to_personal_info_file)
     except ValueError:
-        raise ValueError('Missing required columns. Required columns: ["id", "email", "country"]')
+        raise ValueError(
+            'Missing required columns. Required columns: ["id", "email", "country"]'
+        )
     logger.info("Loaded personal info.")
     if countries_to_filter:
         client_info = filter_rows_by_country(
             client_info, countries_to_filter
         )  # type:ignore
-        logger.info(f"Filtered personal info by the following countries: {countries_to_filter}")
+        logger.info(
+            f"Filtered personal info by the following countries: {countries_to_filter}"
+        )
     client_info = select_id_and_email(client_info)  # type:ignore
     logger.info('Selected "id" and "email columns.')
 
     try:
         financial_info = load_financial_info(filepath=path_to_financial_info_file)
     except ValueError:
-        raise ValueError('Missing required columns. Required columns: ["id", "btc_a", "cc_t", "cc_n"]')
+        raise ValueError(
+            'Missing required columns. Required columns: ["id", "btc_a", "cc_t", "cc_n"]'
+        )
     logger.info("Loaded financial info.")
     financial_info = drop_credit_cardnumber(financial_info)  # type:ignore
     logger.info("Droped credit cardnumber from financial info.")
