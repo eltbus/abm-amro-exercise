@@ -68,3 +68,36 @@ docker run \
 **NOTE2**: network=host allows reaching the API easily (after spining it up).
 **NOTE3**: Docker must use a different folder for logs (or add USERs and permissions to the image). Otherwise, it will
 cause write permission issues when used along the locall installation.
+
+
+# `client_data/result.csv`
+## System install
+```
+# Create the desired destination folder
+mkdir -p client_data
+
+# Pipe the output of the program to the deesired filepath
+python -B app/core.py \
+    --path-to-personal-info-file data/personal_info.csv
+    --path-to-financial-info-file data/financial_info.csv
+    --countries Netherlands 'United Kingdom' > client_data/result.csv
+```
+
+## Docker install
+```
+# Create the desired destination folder
+mkdir -p client_data
+
+# Pipe the output of the program to the desired filepath.
+docker run \
+    --rm \
+    -it \
+    -v $(pwd)/data:/home/abm/data \
+    -v $(pwd)/docker-logs:/home/abm/logs \
+    --network=host \
+    --entrypoint=python \
+    abm-amro-exercise \
+    --path-to-personal-info-file data/personal_info.csv
+    --path-to-financial-info-file data/financial_info.csv
+    --countries Netherlands 'United Kingdom' > client_data/result.csv
+```
