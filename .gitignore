@@ -2,3 +2,5 @@
 poetry.lock
 poetry.toml
 Makefile
+logs
+Interview Task
