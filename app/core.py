@@ -15,9 +15,7 @@ except ModuleNotFoundError:
 def load_personal_info(filepath: str | PathLike) -> DataFrame:
     """
     Loads CSV as pandas.DataFrame.
-
-    Bad filepath ->
-    Bad file schema (missing columns) ->
+    CSV separator used must be ','.
     """
     return read_csv(
         filepath,
@@ -34,9 +32,6 @@ def load_personal_info(filepath: str | PathLike) -> DataFrame:
 def load_financial_info(filepath: str | PathLike) -> DataFrame:
     """
     Loads CSV as pandas.DataFrame.
-
-    Bad filepath ->
-    Bad file schema (missing columns) ->
     """
     return read_csv(
         filepath,
@@ -103,7 +98,7 @@ def pipeline(
         client_info = filter_rows_by_country(
             client_info, countries_to_filter
         )  # type:ignore
-        logger.info("Filtered personal info by country.")
+        logger.info(f"Filtered personal info by the following countries: {countries_to_filter}")
     client_info = select_id_and_email(client_info)  # type:ignore
     logger.info('Selected "id" and "email columns.')
 
@@ -113,10 +108,10 @@ def pipeline(
         raise ValueError('Missing required columns. Required columns: ["id", "btc_a", "cc_t", "cc_n"]')
     logger.info("Loaded financial info.")
     financial_info = drop_credit_cardnumber(financial_info)  # type:ignore
-    logger.info("Drop credit cardnumber from financial info.")
+    logger.info("Droped credit cardnumber from financial info.")
 
     result = inner_join(client_info, financial_info, ["id"])
-    logger.info("Drop credit cardnumber from financial info.")
+    logger.info("Joined personal info and financial info datasets.")
     result = rename_columns(result)
     logger.info("Renamed columns.")
     return result

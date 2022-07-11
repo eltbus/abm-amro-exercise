@@ -3,6 +3,9 @@ from fastapi import FastAPI
 
 
 def create_api() -> FastAPI:
+    """
+    Initialize the API
+    """
     api = FastAPI(
         title="ABM AMRO Exercise REST API",
         description="Exercise implemented as a REST API",
