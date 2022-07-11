@@ -52,5 +52,5 @@ async def return_targets(
             await personal_info.close()
             await financial_info.close()
     response = StreamingResponse(iter([stream.getvalue()]), media_type="text/csv")
-    response.headers["Content-Disposition"] = "attachment; filename=export.csv"
+    response.headers["Content-Disposition"] = "attachment; filename=result.csv"
     return response
